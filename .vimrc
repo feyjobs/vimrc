@@ -75,6 +75,15 @@ let g:tagbar_width=30                    "窗口宽度的设置
 nmap <Leader>tb :Tagbar<CR>
 autocmd BufReadPost *.php,*.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen() "如果是c语言的程序的话，tagbar自动开启
 
+"YouCompleteMe
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+nnoremap <leader>gc :YcmCompleter GoToDeclaration<CR> 
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR> 
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR> 
+let g:ycm_cache_omnifunc=0  
+let g:ycm_seed_identifiers_with_syntax = 1  
+"nmap <F4> :YcmDiags<CR>"
+
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {<CR>}<Esc>O
