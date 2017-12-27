@@ -1,4 +1,6 @@
 set nocompatible              " be iMproved, required
+set hlsearch                  " set Search content highlight
+set pastetoggle=<F2>          "设置粘贴模式不自动换行
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -68,6 +70,9 @@ let NERDTreeWinSize=30
 map <Leader>e :NERDTreeToggle<CR>
 
 set laststatus=2
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 nmap <Leader>tt :TagbarToggle<CR>        "快捷键设置
 let g:tagbar_ctags_bin='ctags'            "ctags程序的路径
@@ -89,8 +94,8 @@ inoremap [ []<Esc>i
 inoremap { {<CR>}<Esc>O
 autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
 inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=CloseBracket()<CR>
+"inoremap ] <c-r>=ClosePair(']')<CR>
+"inoremap } <c-r>=CloseBracket()<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 inoremap ' <c-r>=QuoteDelim("'")<CR>
 
@@ -121,3 +126,41 @@ function QuoteDelim(char)
         return a:char.a:char."\<Esc>i"
     endif
 endf
+
+"=================================================设置自动创建作者,更新时间等信息====================================================="
+map <F4> ms:call AddAuthor()<cr>'s  
+  
+function AddAuthor()  
+        let n=1  
+        while n < 5  
+                let line = getline(n)  
+                if line =~'^\s*\*\s*\S*Last\s*modified\s*:\s*\S*.*$'  
+                        call UpdateTitle()  
+                        return  
+                endif  
+                let n = n + 1  
+        endwhile  
+        call AddTitle()  
+endfunction  
+  
+function UpdateTitle()  
+        normal m'  
+        execute '/* Last modified\s*:/s@:.*$@\=strftime(": %Y-%m-%d %H:%M")@'  
+        normal "  
+        normal mk  
+        execute '/* Filename\s*:/s@:.*$@\=": ".expand("%:t")@'  
+        execute "noh"  
+        normal 'k  
+        echohl WarningMsg | echo "Successful in updating the copy right." | echohl None  
+endfunction  
+  
+function AddTitle()  
+        call append(0,"/**********************************************************")  
+        call append(1," * Author        : gaohao")  
+        call append(2," * Email         : denuth@163.com")  
+        call append(3," * Last modified : ".strftime("%Y-%m-%d %H:%M"))  
+        call append(4," * Filename      : ".expand("%:t"))  
+        call append(5," * Description   : ")  
+        call append(6," * *******************************************************/")  
+        echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
+endfunction  
