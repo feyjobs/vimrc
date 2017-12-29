@@ -30,6 +30,9 @@ Plugin 'bling/vim-airline'
 Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
@@ -62,6 +65,12 @@ syntax enable
 set background=dark
 colorscheme solarized
 
+"=================================================设置基本的改建====================================================="
+nmap <leader>wq :wq<CR> 
+nmap <leader>w :w<CR> 
+nmap <leader>q :q<CR> 
+nmap <leader>qq :q!<CR> 
+inoremap <leader>e <Esc>
 set guifont=Consolas:h12
 set guifontwide=Microsoft/YaHei:h12
 
@@ -164,3 +173,11 @@ function AddTitle()
         call append(6," * *******************************************************/")  
         echohl WarningMsg | echo "Successful in adding the copyright." | echohl None  
 endfunction  
+
+"=================================================设置vim-markdown插件相关配置====================================================="
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_toc_autofit = 1
+
+
+map mt :Toc<CR>
+
